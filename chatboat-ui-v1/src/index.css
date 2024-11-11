@@ -1,0 +1,528 @@
+@font-face {
+  font-family: 'Barlow-Regular';
+  src: url('./assests/font/Barlow/Barlow-Regular.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Barlow-SemiBold';
+  src: url('./assests/font/Barlow/Barlow-SemiBold.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Barlow-Medium';
+  src: url('./assests/font/Barlow/Barlow-Medium.ttf') format('truetype');
+}
+
+
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  color: black !important;
+  font-family: Barlow-Regular !important;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-size: 62.5% !important;
+}
+
+:root {
+  --h_blue: #1c2a79;
+  --h_pink: #f10f9e;
+  --h_til: #20a7c5;
+  --h-gray: #d5d0d1;
+
+}
+
+::-webkit-scrollbar {
+  width: 7px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #20a7c5;
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: var(--h_pink);
+}
+
+.bg_login {
+  height: calc(100vh - 0.5rem);
+
+}
+
+.bg_login>img {
+  border-radius: 30px;
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+.bg_form {
+  height: 100vh;
+  position: relative;
+  display: flex;
+}
+
+.bg_form>img {
+  height: 2.6rem;
+  float: right;
+  right: 2rem;
+  top: 3rem;
+  position: absolute;
+}
+
+.bg_login>.l_head {
+  position: absolute;
+  width: 22rem;
+  left: 6rem;
+  height: unset;
+  top: 5rem;
+  border-radius: inherit;
+  z-index: 999;
+}
+
+.f_outer {
+  display: flex;
+  background: white;
+  margin: auto;
+  flex-direction: column;
+  height: 43rem;
+  width: 41.5rem;
+  position: relative;
+  border-radius: 25px;
+  padding: 5rem;
+}
+
+
+.f_outer::after {
+  content: '';
+  position: absolute;
+  top: -0.1rem;
+  right: 0;
+  bottom: 0px;
+  left: -0.12rem;
+  background: linear-gradient(to right, #f557ba 16%, #757eae 56%);
+  z-index: -1;
+  border-radius: inherit;
+  width: 100.58%;
+  height: 43.2rem;
+  border-radius: 27px;
+}
+
+.f_outer>h1 {
+  margin-top: 2rem;
+  font-size: 2rem;
+  font-family: 'Barlow-Medium';
+  color: var(--h_blue)
+}
+
+.E_box {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  height: 6.5rem;
+  margin-bottom: 1.3rem;
+  position: relative;
+}
+
+.E_box>label {
+  font-size: 1.3rem;
+  color: var(--h_blue);
+}
+
+.E_box>span {
+  width: 100%;
+  height: 3.8rem;
+  font-size: 1.4rem;
+  background: white;
+  position: relative;
+  border-radius: 7px;
+}
+
+.E_box>span>input {
+  width: 100%;
+  height: 3.8rem;
+  border-radius: 7px;
+  font-size: 1.4rem;
+  background: #ffffff;
+  border: none;
+  position: absolute;
+  z-index: 1;
+  outline: none;
+  padding: 1rem;
+}
+
+.E_box>span::after {
+  position: absolute;
+  content: '';
+  z-index: 0;
+  background: linear-gradient(to bottom right, var(--h_pink) 16%, var(--h_blue) 56%);
+  width: 100.5%;
+  height: 4rem;
+  left: -1px;
+  top: -1px;
+  border-radius: 8px;
+}
+
+.lg_btn {
+  height: 4rem;
+  font-size: 1.4rem;
+  color: white;
+  border-radius: 10px;
+  border: none;
+  outline: none;
+  background: linear-gradient(var(--h_pink), var(--h_blue));
+  margin-top: 2rem;
+  width: 101%;
+}
+
+.error {
+  color: red;
+  font-size: 1rem;
+  position: absolute;
+  top: 6.5rem;
+  right: 1rem;
+}
+
+.h_logo {
+  width: 20rem;
+}
+
+.u_Dtls {
+  display: flex;
+  width: fit-content;
+  background: var(--h_blue);
+  height: 3.4rem;
+  padding: 0.5rem 0.5rem 0.5rem 2rem;
+  border-radius: 34px;
+  min-width: 13rem;
+}
+
+.u_Dtls>p {
+  font-size: 1.2rem;
+  margin: 0;
+  line-height: 2.2rem;
+  color: white;
+  margin-right: 1rem;
+}
+
+.u_Dtls>img {
+  margin-left: auto;
+}
+
+.hd_Otr {
+  padding: 1rem 1.5rem 1rem 2.5rem;
+}
+
+.s_hdr {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  justify-content: space-between;
+  background: var(--h_blue);
+  width: 5.5rem;
+  height: calc(100vh - 6rem);
+  border-radius: 10px;
+  padding: 2rem 1rem;
+}
+
+.s_hdr>img {
+  width: 2.2rem;
+  margin: 0 auto;
+}
+
+.s_hdr>img:nth-child(2) {
+  width: 2.5rem;
+}
+
+.cb_O {
+  padding: 0 0.2rem;
+}
+
+.s_M_outer {
+  padding-top: 0.5rem;
+  width: 27%;
+  position: relative;
+}
+
+.s_M_outer>label {
+  font-size: 1.7rem;
+  color: var(--h_blue);
+  margin-left: 1.3rem;
+}
+
+.s_M_outer>h1 {
+  line-height: 0.7;
+  color: var(--h_blue);
+  margin: 0;
+  font-family: 'Barlow-SemiBold';
+  font-size: 2.3rem;
+  margin-left: 1.3rem;
+}
+
+.s_M_outer>p {
+  margin-top: 1rem;
+  font-size: 1.4rem;
+  color: #989898;
+  margin-left: 1.3rem;
+}
+
+.s_M_outer>img {
+  width: 2.6rem;
+  position: absolute;
+  right: 2rem;
+  top: 2rem;
+}
+
+.l_outer>ul {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0 0.5rem;
+}
+
+ul li {
+  width: 100%;
+  position: relative;
+}
+
+.in_O {
+  display: flex;
+  width: 100%;
+  padding: 2rem;
+
+  position: relative;
+  margin-bottom: 0.5rem;
+  box-shadow: 0px 1px 4px 0px #8080802b;
+}
+
+.in_O>h1 {
+  font-size: 1.8rem;
+  padding-left: 1.5rem;
+  color: var(--h_blue);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.in_O>img {
+  width: 4.5rem;
+  background: white;
+  border-radius: 30px;
+}
+
+li>p {
+  position: absolute;
+  top: 5rem;
+  left: 8rem;
+  font-size: 1.2rem;
+  color: #989898;
+}
+
+.in_O.active {
+  /* Add your active styles here */
+  background-color: var(--h_pink);
+  border-radius: 10px;
+}
+
+.in_O.active h1 {
+  color: white;
+  /* Change to desired color */
+}
+
+.in_O.active~p {
+  color: white;
+  /* Change to desired color */
+}
+
+.c_mid_O {
+  background: url(./assests/1x/chat-bg.png);
+  height: calc(100vh - 6rem);
+  width: 68%;
+  background-size: cover;
+  background-repeat: no-repeat;
+  position: relative;
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  border-radius: 25px;
+  padding: 0 4rem;
+}
+
+.chat-input {
+  width: 100%;
+  border-radius: 10px;
+  height: 12rem;
+  margin-top: auto;
+  border: 1px solid #E91E63;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 3rem;
+}
+
+textarea {
+  resize: none !important;
+  width: 100%;
+  font-size: 1.4rem !important;
+  background: none;
+  border: none;
+  padding: 2rem;
+  color: var(--h-gray);
+}
+
+textarea:focus-visible {
+  outline: none;
+  border: none;
+}
+
+.sendBtn {
+  margin-top: -1.5rem;
+  float: right;
+  color: white;
+  font-size: 1.4rem;
+  width: 10rem;
+  margin-right: 2rem;
+  position: relative;
+  height: 3.6rem;
+  border: none;
+  border-radius: 50px;
+  padding-bottom: 0.3rem;
+  background: linear-gradient(to right, var(--h_pink), var(--h_blue));
+}
+
+.sendBtn>img {
+  width: 1.7rem;
+  margin-right: 0.5rem;
+  top: 1rem;
+  left: 1rem;
+  margin-top: -0.4rem;
+}
+
+.chat-window {
+  height: calc(100vh - 24rem);
+  margin-top: 2rem;
+  font-size: 1.4rem;
+  overflow-y: auto;
+  overflow-x: hidden;
+  position: absolute;
+  width: 98.5%;
+  padding: 0 3.5rem;
+  left: 1rem;
+}
+
+.sender_Info {
+  display: flex;
+
+}
+
+.sender_Info>img {
+  width: 3.5rem;
+}
+
+.hia_icon {
+  height: 3rem;
+  width: 3rem;
+}
+
+.sender_Info>p {
+  margin-left: 0.8rem;
+  margin-top: 0.5rem;
+  font-family: 'Barlow-Medium';
+  color: black;
+}
+
+.sender_Info>p:first-child {
+  color: black;
+}
+
+.sender_Info>p:nth-child(2) {
+  color: rgba(255, 255, 255, 0.925);
+}
+
+.user-message {
+  word-wrap: break-word;
+  margin-bottom: 2rem;
+  min-width: 10rem;
+  width: 50%;
+  min-height: 13rem;
+  border-radius: 15px;
+  padding: 1.5rem 2rem;
+  background: white;
+  color: black;
+  margin-left: auto;
+  box-shadow: -1px 0px 0px 0.1px var(--h_pink);
+  position: relative;
+}
+
+.bot-message {
+  word-wrap: break-word;
+  margin-bottom: 2rem;
+  min-width: 10rem;
+  width: 50%;
+  min-height: 13rem;
+  border-radius: 15px;
+  padding: 1.5rem 2rem;
+  background: linear-gradient(to top right, var(--h_pink), var(--h_blue));
+  color: black;
+  position: relative;
+}
+
+.sender_Info>span {
+  font-size: 1.2rem;
+  margin: -le;
+  position: absolute;
+  right: 2rem;
+  top: 1rem;
+  color: gray;
+}
+
+.bot-message>p {
+  margin-top: 1rem;
+  color: white;
+}
+
+.bot-message>.sender_Info>span {
+  color: #ffffffba;
+}
+
+.user-message>p {
+  margin-top: 1rem;
+}
+
+.mic_Icon {
+  width: 3.5rem;
+  margin-top: -2em;
+  margin-left: 2rem;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  50% {
+    transform: scale(1.2);
+    opacity: 0.8;
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Apply the animation to the microphone icon */
+.mic_Icon.recording {
+  animation: pulse 1s infinite;
+}
