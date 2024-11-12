@@ -13,8 +13,8 @@ function TopHeader() {
     
     if (userDetails) {
       const parsedUserDetails = JSON.parse(userDetails);
-      if (parsedUserDetails && typeof parsedUserDetails.userName === 'string') {
-        setUserName(parsedUserDetails.userName); // Set the userName from localStorage
+      if (parsedUserDetails && (typeof parsedUserDetails.userName === 'string' || typeof parsedUserDetails.first_name === 'string')) {
+        setUserName(parsedUserDetails.userName || `${parsedUserDetails.first_name} ${parsedUserDetails.last_name}`); // Set the userName from localStorage
       }
     }
   }, []);
