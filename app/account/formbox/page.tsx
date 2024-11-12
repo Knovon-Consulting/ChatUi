@@ -3,16 +3,31 @@
 import React, { useState } from "react";
 import Col from "react-bootstrap/Col";
 import Image from 'next/image';
-import { useRouter } from 'next/navigation'
+import { useRouter } from 'next/navigation';
+import axios from 'axios';
+
 function Formbox() {
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [errors, setErrors] = useState({ email: "", password: "" });
+    const [errors, setErrors] = useState({ email: "", password: "", firstName: "", lastName: "" });
+    const [isSignup, setIsSignup] = useState(false);
     const router = useRouter(); // Initialize Next.js router
 
     const validateForm = () => {
         let valid = true;
-        const newErrors = { email: "", password: "" };
+        const newErrors = { email: "", password: "", firstName: "", lastName: "" };
+
+        if (isSignup && !firstName) {
+            newErrors.firstName = "First name is required";
+            valid = false;
+        }
+
+        if (isSignup && !lastName) {
+            newErrors.lastName = "Last name is required";
+            valid = false;
+        }
 
         if (!email) {
             newErrors.email = "Email is required";
@@ -34,36 +49,62 @@ function Formbox() {
         return valid;
     };
 
-    const handleSubmit = (e:any) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         if (validateForm()) {
-            // Generate userName by extracting part before "@" from email
-            const userName = email.split("@")[0];
+            try {
+                const apiPath = isSignup ? '/api/login' : '/api/verify-user';
+                const requestData = isSignup ? { firstName, lastName, email, password } : { email, password };
 
-            // Store user details in localStorage
-            const userDetails = {
-                userId: 2, // Replace with actual user ID logic if needed
-                userName: userName, // Generated userName from email
-                email: email // Store the email from the form
-            };
-            localStorage.setItem("userDetails", JSON.stringify(userDetails));
+                const response = await axios.post(apiPath, requestData, {
+                    headers: { 'Content-Type': 'application/json' },
+                });
 
-            console.log("Form submitted:", { email, password, userName });
-            setEmail("");
-            setPassword("");
-            setErrors({ email: "", password: "" });
-            
-    router.push('/Coach/conversation')
+                const userDetails = response.data;
+                localStorage.setItem("userDetails", JSON.stringify(userDetails));
+                router.push('/Coach/conversation');
+            } catch (error) {
+                console.error("Request failed:", error);
+                setErrors({firstName: "", lastName: "", email: "Request failed. Please check your details.", password: "" });
+            }
         }
     };
+
     return (
-        <>
         <Col xs={6}>
             <div className="bg_form">
-                <Image src="/assests/1x/HiA-logo@2x.png" layout="intrinsic" alt="hiALogo" width={220} height={10}  />
+                <Image src="/assets/1x/HiA-logo@2x.png" layout="intrinsic" alt="hiALogo" width={220} height={10} />
                 <div className="f_outer">
-                    <h1>Login</h1>
+                    <h1>{isSignup ? "Sign Up" : "Login"}</h1>
                     <form onSubmit={handleSubmit}>
+                        {isSignup && (
+                            <>
+                                <div className="E_box">
+                                    <label>First Name</label>
+                                    <span>
+                                        <input
+                                            type="text"
+                                            className="cstm_Inputs"
+                                            value={firstName}
+                                            onChange={(e) => setFirstName(e.target.value)}
+                                        />
+                                    </span>
+                                    {errors.firstName && <p className="error">{errors.firstName}</p>}
+                                </div>
+                                <div className="E_box">
+                                    <label>Last Name</label>
+                                    <span>
+                                        <input
+                                            type="text"
+                                            className="cstm_Inputs"
+                                            value={lastName}
+                                            onChange={(e) => setLastName(e.target.value)}
+                                        />
+                                    </span>
+                                    {errors.lastName && <p className="error">{errors.lastName}</p>}
+                                </div>
+                            </>
+                        )}
                         <div className="E_box mt-5">
                             <label>Email</label>
                             <span>
@@ -88,12 +129,14 @@ function Formbox() {
                             </span>
                             {errors.password && <p className="error">{errors.password}</p>}
                         </div>
-                        <button type="submit" className="lg_btn">Login</button>
+                        <button type="submit" className="lg_btn">{isSignup ? "Sign Up" : "Login"}</button>
                     </form>
+                    <button onClick={() => setIsSignup(!isSignup)}>
+                        {isSignup ? "Already have an account? Login" : "Don't have an account? Sign Up"}
+                    </button>
                 </div>
             </div>
         </Col>
-        </>
     );
 }
 

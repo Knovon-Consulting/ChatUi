@@ -1,26 +1,27 @@
+"use client"; // Ensure this file is a client component
+
 import React, { useState, useEffect } from "react";
 import sendicon from '../../../public/assests/1x/send-icon.png';
 import usericon from '../../../public/assests/1x/user-profile.png';
 import Hiaicon from '../../../public/assests/1x/coach-profile-icon.png';
 import micicon from '../../../public/assests/1x/mic-icon-bg.png';
-import Image from "next/image"; // Import Next.js Image component
+import Image from "next/image";
+import axios from 'axios';
 
 function ChatMiddle() {
     const [messages, setMessages] = useState<Array<{ message: string, position: string, time: string }>>([]);
-    const [input, setInput] = useState<string>(""); 
+    const [input, setInput] = useState<string>("");
     const [isRecording, setIsRecording] = useState<boolean>(false);
-    const [userName, setUserName] = useState<string>(''); 
-    const [isClient, setIsClient] = useState<boolean>(false); // Flag to check if we are on the client-side
+    const [userName, setUserName] = useState<string>('');
+    const [isClient, setIsClient] = useState<boolean>(false);
 
     useEffect(() => {
         setIsClient(true);
-
         const userDetails = localStorage.getItem('userDetails');
         if (userDetails) {
             const parsedUserDetails = JSON.parse(userDetails);
-            setUserName(parsedUserDetails?.userName || 'User');
+            setUserName(parsedUserDetails?.userName || parsedUserDetails?.first_name || 'User');
         }
-
         const storedMessages = localStorage.getItem('conversation');
         if (storedMessages) {
             const parsedMessages = JSON.parse(storedMessages);
@@ -41,32 +42,28 @@ function ChatMiddle() {
                 alert("Speech Recognition is not supported in this browser.");
                 return;
             }
-
             const recognition = new SpeechRecognition();
             recognition.continuous = false;
             recognition.interimResults = false;
             recognition.lang = "en-US";
-
             recognition.onresult = (event: any) => {
                 const transcript = event.results[0][0].transcript;
                 setInput(prevInput => prevInput + " " + transcript);
                 setIsRecording(false);
             };
-
             recognition.onerror = (event) => {
                 console.error("Speech recognition error", event.error);
                 setIsRecording(false);
             };
-
             if (isRecording) {
                 recognition.start();
             } else {
                 recognition.stop();
             }
         }
-    }, [isClient, isRecording]); // Ensure stable dependencies
+    }, [isClient, isRecording]);
 
-    const handleSend = () => {
+    const handleSend = async () => {
         if (input.trim()) {
             const currentTime = new Date().toLocaleTimeString();
             const newMessages = [
@@ -74,15 +71,33 @@ function ChatMiddle() {
                 { message: input, position: "right", time: currentTime }
             ];
             setMessages(newMessages);
-            setInput("");
 
-            setTimeout(() => {
+            const userDetails = JSON.parse(localStorage.getItem('userDetails') || '{}');
+            const chatId = localStorage.getItem('chatId');  // Retrieve chatId from localStorage
+
+            if (!chatId) {
+                console.error("Chat ID not found in localStorage");
+                return;
+            }
+
+            try {
+                const response = await axios.post('/api/chat', {
+                    user_id: userDetails.id,
+                    text: input,
+                    chat_id: chatId
+                });
+
+                const botMessage = response.data.message;
                 const botTime = new Date().toLocaleTimeString();
                 setMessages(prevMessages => [
                     ...prevMessages,
-                    { message: "This is a bot response.", position: "left", time: botTime }
+                    { message: botMessage, position: "left", time: botTime }
                 ]);
-            }, 1000);
+            } catch (error) {
+                console.error("Error sending message to API:", error);
+            }
+
+            setInput("");
         }
     };
 
@@ -94,32 +109,16 @@ function ChatMiddle() {
         <div className="c_mid_O">
             <div className="chat-window">
                 {messages.map((msg, index) => (
-                    <div
-                        key={index}
-                        className={`message ${msg.position === "right" ? "user-message" : "bot-message"}`}
-                    >
+                    <div key={index} className={`message ${msg.position === "right" ? "user-message" : "bot-message"}`}>
                         <div className="sender_Info">
                             {msg.position === "right" ? (
                                 <>
-                                    <Image
-                                        src={usericon}
-                                        alt="User Icon"
-                                        layout="intrinsic"
-                                        width={40}
-                                        height={40}
-                                    />
+                                    <Image src={usericon} alt="User Icon" layout="intrinsic" width={40} height={40} />
                                     <p className="text-black">{userName || 'User'}</p>
                                 </>
                             ) : (
                                 <>
-                                    <Image
-                                        src={Hiaicon}
-                                        alt="HiA Icon"
-                                        className="hia_icon"
-                                        layout="intrinsic"
-                                        width={100}
-                                        height={100}
-                                    />
+                                    <Image src={Hiaicon} alt="HiA Icon" className="hia_icon" layout="intrinsic" width={100} height={100} />
                                     <p>HiA Coach</p>
                                 </>
                             )}
@@ -137,14 +136,7 @@ function ChatMiddle() {
                     onKeyPress={(e) => e.key === "Enter" && handleSend()}
                 />
                 <button onClick={handleSend} className="sendBtn">
-                    <Image
-                        src={sendicon}
-                        alt="Send Icon"
-                        layout="intrinsic"
-                        width={20}
-                        height={20}
-                    />
-                    Send
+                    <Image src={sendicon} alt="Send Icon" layout="intrinsic" width={20} height={20} /> Send
                 </button>
                 <Image
                     src={micicon}
