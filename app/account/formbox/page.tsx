@@ -61,6 +61,7 @@ function Formbox() {
                 });
 
                 const userDetails = response.data;
+                userDetails['userName'] = `${userDetails.first_name} ${userDetails.last_name}`
                 localStorage.setItem("userDetails", JSON.stringify(userDetails));
                 router.push('/Coach/conversation');
             } catch (error) {
