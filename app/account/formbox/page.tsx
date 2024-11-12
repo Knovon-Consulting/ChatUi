@@ -5,6 +5,7 @@ import Col from "react-bootstrap/Col";
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
+import { v4 as uuidv4 } from "uuid";
 
 function Formbox() {
     const [firstName, setFirstName] = useState("");
@@ -63,7 +64,7 @@ function Formbox() {
                 const userDetails = response.data;
                 userDetails['userName'] = `${userDetails.first_name} ${userDetails.last_name}`
                 localStorage.setItem("userDetails", JSON.stringify(userDetails));
-                router.push('/Coach/conversation');
+                router.push(`/Coach/conversation/${uuidv4()}`);
             } catch (error) {
                 console.error("Request failed:", error);
                 setErrors({firstName: "", lastName: "", email: "Request failed. Please check your details.", password: "" });
