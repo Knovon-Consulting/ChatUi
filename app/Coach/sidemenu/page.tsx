@@ -9,7 +9,6 @@ import { useRouter } from "next/navigation";
 import { v4 as uuidv4 } from "uuid";
 
 function SideMenu() {
-    const [activeIndex, setActiveIndex] = useState<number | null>(null);
     const [chatsData, setChatsData] = useState([]);
     const [chatId, setChatId] = useState("");
     const router = useRouter(); // Initialize Next.js router
@@ -24,7 +23,7 @@ function SideMenu() {
                 const userDetails = JSON.parse(localStorage.getItem("userDetails") || '{}');
                 const userId = userDetails.id; // Extracting user ID from localStorage
                 const response = await axios.get(`/api/chat-history?userId=${userId}`);
-                const data = response.data.map(chat => ({
+                const data = response.data.map((chat: any)=> ({
                     ...chat,
                     date: new Date(chat.created_at).toISOString().slice(0, 10) // Extract date from chat_label
                 }));
@@ -42,7 +41,7 @@ function SideMenu() {
         try {
             const response = await axios.get(`/api/fetch-chat?chat_id=${chatId}`);
             const chatData = response.data;
-            const chatConversation = []
+            const chatConversation: any[] = []
             chatData.messages.map((msg) => {
                 if (msg.user) {
                     chatConversation.push({
@@ -63,7 +62,6 @@ function SideMenu() {
             setChatId(chatId.toString())
             localStorage.setItem("chatId", chatId.toString());
             router.replace(`/Coach/conversation/${chatId}`)
-            setActiveIndex(index);
         } catch (error) {
             console.error("Error fetching chat details:", error);
         }
@@ -86,7 +84,7 @@ function SideMenu() {
             <div className="l_outer">
                 <ul>
                     {chatsData.map((chat, index) => (
-                        <li key={chat.chat_id} onClick={() => handleChatClick(chat.chat_id, index)}>
+                        <li key={index} onClick={() => handleChatClick(chat.chat_id, index)}>
                             <div className={`in_O ${chatId === chat.chat_id.toString() ? 'active' : ''}`}>
                                 <Image src={chatintrac1} alt={chat.chat_label} width={40} height={40} layout="intrinsic" />
                                 <h1>{chat.chat_label}</h1>

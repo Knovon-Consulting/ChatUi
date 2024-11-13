@@ -1,8 +1,10 @@
+"use client";
+
 import React from "react";
 import { useRouter } from 'next/navigation'
 import Image from "next/image";
 function SideHeader(){
-    const router = useRouter(); 
+    const router = useRouter();
 
     const handleLogout = () => {    
         router.push("/"); // Navigate to the login page

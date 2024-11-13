@@ -25,7 +25,7 @@ function TopHeader() {
       <div className="hd_Otr">
         <Row>
           <Col md={2}>
-            <Image src='/assests/1x/HiA-logo@2x.png' width={200} height={20} className="h_logo" alt="Logo" layout="intrinsic" />
+            <Image src='/assests/1x/HiA-logo2x.png' width={200} height={20} className="h_logo" alt="Logo" layout="intrinsic" />
           </Col>
           <Col md={2} className="ms-auto">
             <div className="u_Dtls ms-auto">
