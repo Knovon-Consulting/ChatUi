@@ -75,8 +75,8 @@ function Formbox() {
     return (
         <Col xs={6}>
             <div className="bg_form">
-                <Image src="/assets/1x/HiA-logo@2x.png" layout="intrinsic" alt="hiALogo" width={220} height={10} />
-                <div className="f_outer">
+            <Image src='/assests/1x/HiA-logo2x.png' layout="intrinsic" alt="hiALogo" width={220} height={10} />
+            <div className={isSignup ? "s_outer" : "f_outer"}>
                     <h1>{isSignup ? "Sign Up" : "Login"}</h1>
                     <form onSubmit={handleSubmit}>
                         {isSignup && (
@@ -107,7 +107,7 @@ function Formbox() {
                                 </div>
                             </>
                         )}
-                        <div className="E_box mt-5">
+                        <div className={`E_box ${!isSignup ? "mt-5" : ""}`}>
                             <label>Email</label>
                             <span>
                                 <input
@@ -133,9 +133,9 @@ function Formbox() {
                         </div>
                         <button type="submit" className="lg_btn">{isSignup ? "Sign Up" : "Login"}</button>
                     </form>
-                    <button onClick={() => setIsSignup(!isSignup)}>
+                    <span onClick={() => setIsSignup(!isSignup)} className="signIn">
                         {isSignup ? "Already have an account? Login" : "Don't have an account? Sign Up"}
-                    </button>
+                    </span>
                 </div>
             </div>
         </Col>

@@ -104,6 +104,7 @@ body {
   position: relative;
   border-radius: 25px;
   padding: 5rem;
+  transition: 0.2s liner;
 }
 
 
@@ -120,6 +121,7 @@ body {
   width: 100.58%;
   height: 43.2rem;
   border-radius: 27px;
+  transition: 0.2s liner;
 }
 
 .f_outer>h1 {
@@ -128,7 +130,43 @@ body {
   font-family: 'Barlow-Medium';
   color: var(--h_blue)
 }
+.s_outer {
+  display: flex;
+  background: white;
+  margin: auto;
+  flex-direction: column;
+  height: 47rem;
+  width: 41.5rem;
+  position: relative;
+  border-radius: 25px;
+  padding: 0rem 5rem 2rem 5rem;
+  transition: 0.2s liner;
+}
 
+
+.s_outer::after {
+  content: '';
+  position: absolute;
+  top: -0.1rem;
+  right: 0;
+  bottom: 0px;
+  left: -0.12rem;
+  background: linear-gradient(to right, #f557ba 16%, #757eae 56%);
+  z-index: -1;
+  border-radius: inherit;
+  width: 100.58%;
+  height: 47.2rem;
+  border-radius: 27px;
+  transition: 0.2s liner;
+}
+
+.s_outer>h1 {
+  margin-top: 2rem;
+  margin-bottom: 1.5rem;
+  font-size: 2rem;
+  font-family: 'Barlow-Medium';
+  color: var(--h_blue)
+}
 .E_box {
   display: flex;
   justify-content: space-between;
@@ -176,8 +214,18 @@ body {
   top: -1px;
   border-radius: 8px;
 }
-
-.lg_btn {
+.s_outer  .lg_btn{
+  margin-top: 1.5rem;
+  height: 4rem;
+  font-size: 1.4rem;
+  color: white;
+  border-radius: 10px;
+  border: none;
+  outline: none;
+  background: linear-gradient(var(--h_pink), var(--h_blue));
+  width: 101%;
+}
+.f_outer .lg_btn {
   height: 4rem;
   font-size: 1.4rem;
   color: white;
@@ -285,6 +333,7 @@ body {
   position: absolute;
   right: 2rem;
   top: 2rem;
+cursor: pointer;
 }
 
 .l_outer>ul {
@@ -303,7 +352,7 @@ ul li {
   display: flex;
   width: 100%;
   padding: 2rem;
-
+cursor: pointer;
   position: relative;
   margin-bottom: 0.5rem;
   box-shadow: 0px 1px 4px 0px #8080802b;
@@ -530,4 +579,16 @@ textarea:focus-visible {
 /* Apply the animation to the microphone icon */
 .mic_Icon.recording {
   animation: pulse 1s infinite;
+}
+.signIn{
+  background: white;
+  border: none;
+  font-size: 1.3rem;
+  margin-top: 1rem;
+  text-align: center;
+  font-family: 'Barlow-Regular';
+  cursor: pointer;
+}
+.signIn:hover{
+  color: #20a7c5;
 }

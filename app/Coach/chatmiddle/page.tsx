@@ -1,6 +1,6 @@
 "use client"; // Ensure this file is a client component
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import sendicon from '../../../public/assests/1x/send-icon.png';
 import usericon from '../../../public/assests/1x/user-profile.png';
 import Hiaicon from '../../../public/assests/1x/coach-profile-icon.png';
@@ -14,6 +14,8 @@ function ChatMiddle() {
     const [isRecording, setIsRecording] = useState<boolean>(false);
     const [userName, setUserName] = useState<string>('');
     const [isClient, setIsClient] = useState<boolean>(false);
+    const [loading, setLoading] = useState<boolean>(false);
+    const chatWindowRef = useRef<HTMLDivElement>(null);  
 
     useEffect(() => {
         setIsClient(true);
@@ -32,6 +34,7 @@ function ChatMiddle() {
     useEffect(() => {
         if (messages.length > 0) {
             localStorage.setItem('conversation', JSON.stringify(messages));
+            scrollToBottom();
         }
     }, [messages]);
 
@@ -71,12 +74,15 @@ function ChatMiddle() {
                 { message: input, position: "right", time: currentTime }
             ];
             setMessages(newMessages);
+            setInput("");
+            setLoading(true);
 
             const userDetails = JSON.parse(localStorage.getItem('userDetails') || '{}');
             const chatId = localStorage.getItem('chatId');  // Retrieve chatId from localStorage
 
             if (!chatId) {
                 console.error("Chat ID not found in localStorage");
+                setLoading(false);
                 return;
             }
 
@@ -96,8 +102,9 @@ function ChatMiddle() {
             } catch (error) {
                 console.error("Error sending message to API:", error);
             }
-
-            setInput("");
+            finally {
+                setLoading(false);  // Stop loading once the bot response is received
+            }
         }
     };
 
@@ -105,9 +112,17 @@ function ChatMiddle() {
         setIsRecording(prevRecording => !prevRecording);
     };
 
+    const scrollToBottom = () => {
+        if (chatWindowRef.current) {
+            chatWindowRef.current.scrollTo({
+                top: chatWindowRef.current.scrollHeight,
+                behavior: "smooth"  // Smooth scrolling behavior
+            });
+        }
+    };
     return (
         <div className="c_mid_O">
-            <div className="chat-window">
+            <div className="chat-window" ref={chatWindowRef}>
                 {messages.map((msg, index) => (
                     <div key={index} className={`message ${msg.position === "right" ? "user-message" : "bot-message"}`}>
                         <div className="sender_Info">
@@ -127,13 +142,24 @@ function ChatMiddle() {
                         <p>{msg.message}</p>
                     </div>
                 ))}
+                          {loading && (
+                    <div className="bot-message loading-message">
+                        <Image src={Hiaicon} alt="HiA Icon" className="hia_icon" layout="intrinsic" width={40} height={40} />
+                        <p>HiA Coach is typing...</p>
+                    </div>
+                )}
             </div>
             <div className="chat-input">
                 <textarea
                     placeholder="Type a message..."
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
-                    onKeyPress={(e) => e.key === "Enter" && handleSend()}
+                        onKeyDown={(e) => {
+                        if (e.key === "Enter" && !e.shiftKey) {  // Send on Enter without Shift
+                            e.preventDefault(); // Prevents newline
+                            handleSend();
+                        }
+                    }}
                 />
                 <button onClick={handleSend} className="sendBtn">
                     <Image src={sendicon} alt="Send Icon" layout="intrinsic" width={20} height={20} /> Send

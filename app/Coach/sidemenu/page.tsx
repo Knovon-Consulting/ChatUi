@@ -81,7 +81,7 @@ function SideMenu() {
         <div className="s_M_outer">
             <label>Your Previous</label>
             <h1>Coaching Interactions</h1>
-            <Image src={newchat} alt="New chat icon" width={50} height={50} layout="intrinsic"  onClick={handleNewChat}/>
+            <Image src={newchat} alt="New chat icon" width={50} height={50} layout="intrinsic" title="New chat"  onClick={handleNewChat}/>
             <p>Recent Chats</p>
             <div className="l_outer">
                 <ul>
