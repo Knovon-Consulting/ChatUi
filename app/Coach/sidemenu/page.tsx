@@ -68,8 +68,8 @@ function SideMenu() {
     };
 
     const handleNewChat = () => {
-      const storedChats = JSON.parse(localStorage.getItem("conversation") || "");
-      if (storedChats.length > 0) {
+      const storedChats = localStorage.getItem("conversation") || "";
+      if (storedChats && JSON.parse(storedChats).length > 0) {
         localStorage.removeItem("conversation");
         router.replace(`/Coach/conversation/${uuidv4()}`);
       }

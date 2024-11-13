@@ -64,6 +64,7 @@ function Formbox() {
                 const userDetails = response.data;
                 userDetails['userName'] = `${userDetails.first_name} ${userDetails.last_name}`
                 localStorage.setItem("userDetails", JSON.stringify(userDetails));
+                localStorage.removeItem("conversation");
                 router.push(`/Coach/conversation/${uuidv4()}`);
             } catch (error) {
                 console.error("Request failed:", error);
