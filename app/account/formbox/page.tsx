@@ -134,7 +134,7 @@ function Formbox() {
                         </div>
                         <button type="submit" className="lg_btn">{isSignup ? "Sign Up" : "Login"}</button>
                     </form>
-                    <span onClick={() => setIsSignup(!isSignup)} className="signIn">
+                    <span onClick={() => setIsSignup(!isSignup)} className="signIn d-none">
                         {isSignup ? "Already have an account? Login" : "Don't have an account? Sign Up"}
                     </span>
                 </div>

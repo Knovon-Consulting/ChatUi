@@ -426,7 +426,7 @@ li>p {
 textarea {
   resize: none !important;
   width: 100%;
-  font-size: 1.4rem !important;
+  font-size: 1.5rem !important;
   background: none;
   border: none;
   padding: 2rem;
@@ -480,6 +480,7 @@ textarea:focus-visible {
 
 .sender_Info>img {
   width: 3.5rem;
+  height: 3.5rem;
 }
 
 .hia_icon {
@@ -516,6 +517,7 @@ textarea:focus-visible {
   margin-left: auto;
   box-shadow: -1px 0px 0px 0.1px var(--h_pink);
   position: relative;
+  font-size: 1.6rem;
 }
 
 .bot-message {
@@ -529,6 +531,7 @@ textarea:focus-visible {
   background: linear-gradient(to top right, var(--h_pink), var(--h_blue));
   color: black;
   position: relative;
+  font-size: 1.6rem;
 }
 
 .sender_Info>span {

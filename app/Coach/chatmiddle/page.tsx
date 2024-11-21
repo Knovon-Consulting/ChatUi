@@ -128,12 +128,12 @@ function ChatMiddle() {
                         <div className="sender_Info">
                             {msg.position === "right" ? (
                                 <>
-                                    <Image src={usericon} alt="User Icon" layout="intrinsic" width={40} height={40} />
+                                    <Image src={usericon} alt="User Icon"  width={40} height={40} />
                                     <p className="text-black">{userName || 'User'}</p>
                                 </>
                             ) : (
                                 <>
-                                    <Image src={Hiaicon} alt="HiA Icon" className="hia_icon" layout="intrinsic" width={100} height={100} />
+                                    <Image src={Hiaicon} alt="HiA Icon" className="hia_icon"  width={100} height={100} />
                                     <p>HiA Coach</p>
                                 </>
                             )}
