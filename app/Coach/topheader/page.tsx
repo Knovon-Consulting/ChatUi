@@ -30,7 +30,7 @@ function TopHeader() {
           <Col xs={6} md={2} className="ms-auto">
             <div className="u_Dtls ms-auto">
               <p>{userName || 'User'}</p> 
-              <Image src='/assests/1x/user-profile.png' alt="User Profile" width={25} height={25} layout="intrinsic"/>
+              <Image src='/assests/1x/user-profile.png' alt="User Profile" width={25} height={25} />
             </div>
           </Col>
         </Row>
