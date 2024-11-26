@@ -1,16 +1,30 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import chatintrac1 from '../../../public/assests/1x/chat-interaction-icon-with-bg1.png';
+import chatintrac1 from '@/public/assests/1x/chat-interaction-icon-with-bg1.png';
 import Image from "next/image";
-import newchat from '../../../public/assests/1x/new-chat-icon.png';
+import newchat from '@/public/assests/1x/new-chat-icon.png';
+
+import left from "@/public/assests/1x/left.png"
+import right from "@/public/assests/1x/right.png"
 import axios from 'axios';
 import { useRouter } from "next/navigation";
 import { v4 as uuidv4 } from "uuid";
-import left from "../../../public/assests/1x/left.png"
-import right from "../../../public/assests/1x/right.png"
+
+
+interface Chat {
+    chat_id: string;
+    chat_label: string;
+    created_at: string;
+}
+
+interface Message {
+    user?: string;
+    coach?: string;
+}
+
 function SideMenu() {
-    const [chatsData, setChatsData] = useState([]);
+    const [chatsData, setChatsData] = useState<Chat[]>([]);
     const [chatId, setChatId] = useState("");
     const router = useRouter(); // Initialize Next.js router
     const [menuOpen, setMenuOpen] =  useState(false); // Track menu state
@@ -24,7 +38,7 @@ function SideMenu() {
                 const userDetails = JSON.parse(localStorage.getItem("userDetails") || '{}');
                 const userId = userDetails.id; // Extracting user ID from localStorage
                 const response = await axios.get(`/api/chat-history?userId=${userId}`);
-                const data = response.data.map((chat: any)=> ({
+                const data = response.data.map((chat: Chat) => ({
                     ...chat,
                     date: new Date(chat.created_at).toISOString().slice(0, 10) // Extract date from chat_label
                 }));
@@ -38,12 +52,12 @@ function SideMenu() {
         fetchChats();
     }, []);
 
-    const handleChatClick = async (chatId: string, index: number) => {
+    const handleChatClick = async (chatId: string) => {
         try {
             const response = await axios.get(`/api/fetch-chat?chat_id=${chatId}`);
             const chatData = response.data;
-            const chatConversation: any[] = []
-            chatData.messages.map((msg) => {
+            const chatConversation: any[] = [];
+            (chatData.messages as Message[]).forEach((msg) => {
                 if (msg.user) {
                     chatConversation.push({
                         message: msg.user,
@@ -104,7 +118,7 @@ function SideMenu() {
             <div className="l_outer">
                 <ul>
                     {chatsData.map((chat, index) => (
-                        <li key={index} onClick={() => handleChatClick(chat.chat_id, index)}>
+                        <li key={index} onClick={() => handleChatClick(chat.chat_id)}>
                             <div className={`in_O ${chatId === chat.chat_id.toString() ? 'active' : ''}`}>
                                 <Image src={chatintrac1} alt={chat.chat_label} width={40} height={40} layout="intrinsic" />
                                 <h1>{chat.chat_label}</h1>

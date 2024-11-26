@@ -22,9 +22,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       // Forward the Django response to the frontend
       console.log('response:', response)
       res.status(response.status).json(response.data);
-    } catch (error:any) {
-      // console.error('Error in login API route:', error);
-      res.status(error.response?.status || 500).json({ error: error.message });
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error) && error.response) {
+        res.status(error.response.status).json({ error: error.response.data });
+      } else {
+        res.status(500).json({ error: 'An unexpected error occurred' });
+      }
     }
   } else {
     // Handle any other HTTP methods

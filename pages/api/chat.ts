@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 
 const backendBaseUrl = process.env.NEXT_PUBLIC_BACKEND_BASE_URL; // Ensure this is defined in your .env.local
 console.log('backendBaseUrl:', backendBaseUrl)
@@ -20,7 +20,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
       // Forward the Django response to the frontend
       res.status(response.status).json(response.data);
-    } catch (error:any) {
+    } catch (error: AxiosError) {
       // console.error('Error in chat API route:', error);
       res.status(error.response?.status || 500).json({ error: error.message });
     }
