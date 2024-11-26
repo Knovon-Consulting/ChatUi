@@ -74,9 +74,12 @@ function Formbox() {
     };
 
     return (
-        <Col xs={6}>
+        <Col xs={12} sm={6} className="position-relative">
+        <div className="m_set">
+        <Image src='/assests/1x/HiA-logo2x.png' layout="intrinsic" alt="hiALogo" width={220} height={10}  className="d-sm-none d-block"/>
             <div className="bg_form">
-            <Image src='/assests/1x/HiA-logo2x.png' layout="intrinsic" alt="hiALogo" width={220} height={10} />
+            <Image src='/assests/1x/HiA-logo2x.png' layout="intrinsic" alt="hiALogo" width={220} height={10}  className="d-none d-sm-block"/>
+            
             <div className={isSignup ? "s_outer" : "f_outer"}>
                     <h1>{isSignup ? "Sign Up" : "Login"}</h1>
                     <form onSubmit={handleSubmit}>
@@ -137,8 +140,13 @@ function Formbox() {
                     <span onClick={() => setIsSignup(!isSignup)} className="signIn d-none">
                         {isSignup ? "Already have an account? Login" : "Don't have an account? Sign Up"}
                     </span>
+
+
                 </div>
+               
             </div>
+            </div>
+            
         </Col>
     );
 }

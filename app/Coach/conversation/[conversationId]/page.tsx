@@ -15,7 +15,7 @@ function conversation() {
     <>
       <div className="cb_O">
         <TopHeader></TopHeader>
-        <div className="d-flex">
+        <div className="d-flex cstm-padding position-relative">
           <SideHeader></SideHeader>
           <SideMenu></SideMenu>
           <ChatMiddle></ChatMiddle>

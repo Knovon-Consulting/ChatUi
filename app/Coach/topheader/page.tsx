@@ -24,10 +24,10 @@ function TopHeader() {
     <>
       <div className="hd_Otr">
         <Row>
-          <Col md={2}>
+          <Col xs={6} md={2}>
             <Image src='/assests/1x/HiA-logo2x.png' width={200} height={20} className="h_logo" alt="Logo" layout="intrinsic" />
           </Col>
-          <Col md={2} className="ms-auto">
+          <Col xs={6} md={2} className="ms-auto">
             <div className="u_Dtls ms-auto">
               <p>{userName || 'User'}</p> 
               <Image src='/assests/1x/user-profile.png' alt="User Profile" width={25} height={25} layout="intrinsic"/>
