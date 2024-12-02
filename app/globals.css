@@ -494,6 +494,11 @@ textarea:focus-visible {
   width: 3rem;
 }
 
+.user_icon {
+  height: 3rem;
+  width: 3rem;
+}
+
 .sender_Info>p {
   margin-left: 0.8rem;
   margin-top: 0.5rem;

@@ -14,6 +14,8 @@ function ChatMiddle() {
     const [userName, setUserName] = useState<string>('');
     const [mediaRecorder, setMediaRecorder] = useState<MediaRecorder | null>(null);
     const [loading, setLoading] = useState<boolean>(false);
+    const [isAudioToText, setIsAudioToText] = useState<boolean>(false);
+
     let chunks: Blob[] = [];
 
     useEffect(() => {
@@ -48,6 +50,7 @@ function ChatMiddle() {
                         chunks.push(e.data);
                     };
                     newMediaRecorder.onstop = async () => {
+                        setIsAudioToText(true);
                         const audioBlob = new Blob(chunks, { type: 'audio/webm' });
                         const formData = new FormData();
                         formData.append('file', audioBlob, 'recording.webm');
@@ -61,7 +64,7 @@ function ChatMiddle() {
                             if (response.status !== 200) {
                                 throw data.error || new Error(`Request failed with status ${response.status}`);
                             }
-
+                            setIsAudioToText(false);
                             // Send the message to handleSend
                             sendSpeechMessage(data.message.text);
                         } catch (error) {
@@ -187,6 +190,12 @@ function ChatMiddle() {
                     <div className="bot-message loading-message">
                         <Image src={Hiaicon} alt="HiA Icon" className="hia_icon" layout="intrinsic" width={40} height={40} />
                         <p>HiA Coach is typing...</p>
+                    </div>
+                )}
+                {isAudioToText && (
+                    <div className="user-message loading-message">
+                        <Image src={usericon} alt="User Icon" className="user_icon" layout="intrinsic" width={40} height={40} />
+                        <p>Transcribing your words… please wait.</p>
                     </div>
                 )}
             </div>
