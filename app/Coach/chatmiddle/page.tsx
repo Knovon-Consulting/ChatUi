@@ -50,7 +50,9 @@ function ChatMiddle() {
                         chunks.push(e.data);
                     };
                     newMediaRecorder.onstop = async () => {
+                        setTimeout( () => scrollToBottom(), 300);
                         setIsAudioToText(true);
+
                         const audioBlob = new Blob(chunks, { type: 'audio/webm' });
                         const formData = new FormData();
                         formData.append('file', audioBlob, 'recording.webm');
